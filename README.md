@@ -3,13 +3,7 @@
    <h4>Compare prices from dozens of well known e-commerce and b&m retailers.</h4>
 </div>
 
-## `Table of contents`
-
-- [Install](#install)
-- [Available stores](#`Available stores`)
-- [Quick tips](#`Quick tips`)
-
-### `Install`
+## `Install`
 
 ```bash
 git clone https://github.com/mchocho/themALL
@@ -40,7 +34,7 @@ DRIVER=Path/to/geckodriver
 ```bash
 py -m unittest test/test_themall.py
 ```
-### `Available stores`
+## `Available stores`
 
 <table>
 	<tr>
@@ -120,9 +114,8 @@ py -m unittest test/test_themall.py
 	</tr>
 </table>
 
-### `Quick tips`
+## `Quick tips`
 
 * Precise searches yield the best results.
 * If the table columns are too wide, just zoom out, retry the search, then zoom back in once it produces output.
-* Please don't abuse this power.
 * Please share this with your friends.
