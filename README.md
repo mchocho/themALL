@@ -6,8 +6,8 @@
 ## `Table of contents`
 
 - [Install](#install)
-- [Available stores](`#Available stores`)
-- [Quick tips](`#Quick tips`)
+- [Available stores](#`Available stores`)
+- [Quick tips](#`Quick tips`)
 
 ### `Install`
 
