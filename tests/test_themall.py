@@ -1,5 +1,5 @@
 import unittest
-from src.themall.themall import * 
+from themall.themall import * 
 
 item     = "power bank"
 maxPages = 1
