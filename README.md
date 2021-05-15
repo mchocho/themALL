@@ -3,11 +3,11 @@
    <h4>Compare prices from dozens of well known e-commerce and b&m retailers.</h4>
 </div>
 
-## `Table of Contents`
+## `Table of contents`
 
 - [Install](#install)
-- [Available stores](#Available stores)
-- [Quick tips](#Quick tips)
+- [Available stores](`#Available stores`)
+- [Quick tips](`#Quick tips`)
 
 ### `Install`
 
@@ -114,7 +114,7 @@ py -m unittest test/test_themall.py
 		<td>No</td>
 	</tr>
 	<tr>
-		<td><a href="https://www.wantitall.co.za"></a></td>
+		<td><a href="https://www.wantitall.co.za">WantItAll.co.za</a></td>
 		<td>&#127487;&#127462;</td>
 		<td>No</td>
 	</tr>

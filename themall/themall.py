@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 
-import os
 import re
-import sys
 import time
 import random
 import datetime
@@ -86,8 +84,6 @@ def fetchDocumentJS(url, method = "get", agent = 0):
       driver.post(url)
     return (driver)
   except:
-      if (isNotNone(driver)):
-        driver.quit()
       print("Failed to connect with " + hostname(url) + ".\n")
       return (None)
 
@@ -103,7 +99,6 @@ def appendResult(results, title, price, url):
 
   if value.isdigit and value != '':
     title = limitStrlen(title)
-    #price = re.sub("(| |\t|\n)", "", price)
     results.append({ "Title": title, "Price": price, "Url": url })
 
 def nextPageAvailable(pages, nextPage):
@@ -268,7 +263,8 @@ def fetchGameResults(results, item, page = 1):
   return (nextPageAvailable(pages, nextPage))
 
 def fetchHificorpResults(results, item, page = 1):
-  url      = "https://www.hificorp.co.za/catalogsearch/result/?p= " + str(page) + "&q=" + str(item)
+  base     = "https://www.hificorp.co.za"
+  url      = base + "/catalogsearch/result/?p= " + str(page) + "&q=" + str(item)
   bsObj    = fetchDocument(url)
 
   if bsObj is None:
@@ -442,13 +438,8 @@ def fetchRaruResults(results, item, page = 1):
   return (nextPageAvailable(pages, nextPage))
 
 def fetchTakealotResults(results, item, page = 1):
-  '''
-  Takealot requires js to view items and uses session based pagination 
-  which will require more background time, so 1 page will do. 
-  '''
   base   = "https://www.takealot.com"
   url    = base + "/all?_r=" + str(page) + "&_sb=1&qsearch=" + str(item)
-  #url    = base + "/all?_sb=1&_r=1&qsearch=" + str(item)
   driver = fetchDocumentJS(url)
 
   if driver is None:
