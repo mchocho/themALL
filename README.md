@@ -23,12 +23,6 @@ py themall "resident evil village" > results.txt
 vi .env
 ```
 
-Then just add the variable
-
-```bash
-DRIVER=Path/to/geckodriver
-```
-
 <p>Replace the value "Path/to/geckodriver" with the path to web driver. Save the .env file and exit vim. Then run: </a>
 
 ```bash
