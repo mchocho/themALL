@@ -55,8 +55,9 @@ def sendRequest(url, method = "get", params = None , agent = 0):
       req = session.get(url, data=params, headers=headers)
     else:
       req = session.post(url, data=params, headers=headers)
-
-    return (req)
+    res = req.text
+    req.close()
+    return (res)
   except:
     print("Failed to connect to " + hostname(url) + ".\n")
     return (None)
@@ -66,7 +67,7 @@ def fetchDocument(url, method = "get", params = None):
 
   if html is None:
       return (None)
-  bsObj = BeautifulSoup(html.text, "html.parser")
+  bsObj = BeautifulSoup(html, "html.parser")
   return (bsObj)
 
 def fetchDocumentJS(url, method = "get", agent = 0):
