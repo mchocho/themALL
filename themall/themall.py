@@ -71,6 +71,7 @@ def fetchDocument(url, method = "get", params = None):
   return (bsObj)
 
 def fetchDocumentJS(url, method = "get", agent = 0):
+  driver = None
   try:
     userAgent        = str(agentList[agent]).strip()
     profile          = webdriver.FirefoxProfile()
@@ -86,6 +87,8 @@ def fetchDocumentJS(url, method = "get", agent = 0):
     return (driver)
   except:
       print("Failed to connect with " + hostname(url) + ".\n")
+      if driver is not None:
+          driver.quit()
       return (None)
 
 def limitStrlen(value):
