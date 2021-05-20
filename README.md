@@ -1,7 +1,9 @@
 <div align="center">
    <h1>themALL🛍️</h1>
    <h4>Compare prices from dozens of well known e-commerce and b&m retailers.</h4>
-   [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)&nbsp;&nbsp;
+	
+   [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
+   
    [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 </div>
 
