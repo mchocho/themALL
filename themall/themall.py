@@ -35,9 +35,6 @@ def isNotNone(*args):
       return (False);
   return (True);
 
-def removeCurrency(value):
-  return (re.sub("(ZAR|R| |\t|\n|,)", "", str(value)))
-
 def hostname(url):
     parsed = urllib.parse.urlparse(url)
     return (str(parsed.netloc))
@@ -92,18 +89,28 @@ def fetchDocumentJS(url, method = "get", agent = 0):
       return (None)
 
 def limitStrlen(value):
-    limit = 120
+  limit = 120
 
-    if len(value) >= limit:
-        value = value[:limit] + "..."
-    return (value)
+  if len(value) >= limit:
+      value = value[:limit] + "..."
+  return (value)
 
 def appendResult(results, title, price, url):
-  value = removeCurrency(price)
+  value = cleanValue(price)
 
   if value.isdigit and value != '':
     title = limitStrlen(title)
+    value = fetchCurrency() + value
     results.append({ "Title": title, "Price": price, "Url": url })
+
+def removeCurrency(value):
+  return (re.sub("(ZAR|R| |\t|\n|,)", "", str(value)))
+
+def cleanValue(value):
+  return (re.sub("[^(0-9|.)]", "", str(value)))   
+
+def fetchCurrency():
+  return "R"
 
 def nextPageAvailable(pages, nextPage):
   if pages is not None:
@@ -119,7 +126,7 @@ def printTable(dataset):
     print("No results were found.")
     return
 
-  dataset.sort(key=lambda item: float(removeCurrency(item.get("Price"))))
+  dataset.sort(key=lambda item: float(cleanValue(item.get("Price"))))
   header = dataset[0].keys()
   rows   = [x.values() for x in dataset]
   print('\n')
@@ -127,7 +134,6 @@ def printTable(dataset):
 
 
 def fetchBidorbuyResults(results, item, page = 1):
-  #Probably yields the best results
   base   = "https://www.bidorbuy.co.za"
   url    = base + "/jsp/tradesearch/TradeSearch.jsp"
   method = "post"
