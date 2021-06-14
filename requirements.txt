@@ -3,5 +3,5 @@ python-decouple==3.4
 requests==2.25.1
 selenium==3.141.0
 tabulate==0.8.9
-urllib3==1.26.4
+urllib3==1.26.5
 virtualenv==20.4.3
