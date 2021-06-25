@@ -99,9 +99,14 @@ def appendResult(results, title, price, url):
   value = cleanValue(price)
 
   if value.isdigit and value != '':
-    title = limitStrlen(title)
+    title = removeUnicode(limitStrlen(title))
     value = fetchCurrency() + value
     results.append({ "Title": title, "Price": price, "Url": url })
+
+def removeUnicode(value):
+  str = value.encode("ascii", "ignore")
+  str = str.decode()
+  return (str)
 
 def removeCurrency(value):
   return (re.sub("(ZAR|R| |\t|\n|,)", "", str(value)))
@@ -129,7 +134,7 @@ def printTable(dataset):
   dataset.sort(key=lambda item: float(cleanValue(item.get("Price"))))
   header = dataset[0].keys()
   rows   = [x.values() for x in dataset]
-  print('\n')
+  print("\n")
   print(tabulate.tabulate(rows, header, tablefmt="github"))
 
 
@@ -538,6 +543,35 @@ def fetchWantitallResults(results, item, page = 1):
         appendResult(results, title, price, url)
   return (nextPageAvailable)
 
+def fetchEbayResults(results, item, page = 1):
+  base  = "https://www.ebay.com"
+  url   = base + "/sch/i.html?_from=R40&_nkw=" + str(item) + "&_pgn=" + str(2)
+  bsObj = fetchDocument(url)
+
+  if bsObj is None:
+    return (False)
+
+  items = bsObj.findAll("li", {"class": "s-item"})
+  pages = bsObj.find("a", {"class": "pagination__item"})
+  nextPage = int(page) + 1
+
+  for item in items:
+    title    = item.find("h3", {"class": "s-item__title"})
+    price    = item.find("span", {"class": "s-item__price"})
+    shipping = item.find("span", {"class": "s-item__shipping"})
+    url      = item.find("a", {"class": "s-item__link"})
+
+    if isNotNone(title, price, url):
+      title = title.text
+      price = price.text
+      url   = url.attrs["href"]
+
+      #if (isNotNone(shipping)):
+
+      appendResult(result, title, price, url)
+  return (nextPageAvailable(pages, nextPage))
+
+
 def searchBidorbuy(results, item, maxPages = 5, offset = 0):
   page     = (offset * maxPages) + 1
   nextPage = True
@@ -663,3 +697,14 @@ def searchWantitall(results, item, maxPages = 5, offset = 0):
     nextPage = fetchWantitallResults(results, item, page)
     page    += 1
     i       += 1
+
+def searchEbay(results, item, maxPages = 5, offset = 0):
+  page     = (offset * maxPages) + 1
+  nextPage = True
+  i        = 0
+
+  while (nextPage and i < maxPages):
+    nextPage = fetchEbayResults(results, item, maxPages)
+    page    += 1
+    i       += 1
+
