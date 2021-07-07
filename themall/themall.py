@@ -248,7 +248,7 @@ def fetchEvetechResults(results, item):
 
         title = title.text
         price = price.text
-        url   = base + url.attrs["href"]
+        url   = base + '/' + url.attrs["href"]
         appendResult(results, title, price, url)
   return (False)
 
