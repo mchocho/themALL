@@ -396,9 +396,10 @@ def fetchMakroResults(results, item, page = 1):
   return (nextPageAvailable(pages, nextPage))
 
 def fetchPnpResults(results, item, page = 1):
-  base     = "https://www.pnp.co.za"
-  url      = base + "/pnpstorefront/pnp/en/search?q=" + str(item) + "%3Arelevance&pageSize=18&page=" + str(page - 1)
-  bsObj    = fetchDocument(url)
+  base  = "https://www.pnp.co.za"
+  query = "/pnpstorefront/pnp/en/search?text=" 
+  url   = base + query + str(item) + "%3Arelevance&pageSize=18&page=" + str(page - 1)
+  bsObj = fetchDocument(url)
 
   if bsObj is None:
     return (False)
@@ -411,14 +412,14 @@ def fetchPnpResults(results, item, page = 1):
   for item in items:
     title = item.find("div", {"class": "item-name"})
     price = item.find("div", {"class": "currentPrice"})
-    url   = item.find("a")
+    url   = base + query + str(title)
 
     if isNotNone(title, price, url):
       for data in price(["span"]):
         data.decompose()
 
       title = title.text
-      url   = base + url.attrs["href"]
+      #url   = base + url.attrs["href"]
       price = re.sub("(|'|,|) ", "", price.text)
       appendResult(results, title, price, url)
   return (nextPageAvailable(pages, nextPage))
@@ -498,14 +499,14 @@ def fetchThekidzoneResults(results, item, page = 1):
   if bsObj is None:
     return (False)
 
-  items = bsObj.findAll("div", {"class": "product-wrap"})
+  items = bsObj.findAll("li", {"class": "clearfix"})
   pages = bsObj.find("div", {"class": "paginate"})
   pages = pages.findAll("a") if (pages is not None) else None
   nextPage = int(page) + 1
 
   for item in items:
-    title = item.find("span", {"class": "title"})
-    price = item.find("span", {"class": "money"})
+    title = item.find("h4")
+    price = item.find("span", {"class": "price-money"})
     url   = item.find("a")
 
     if isNotNone(title, price, url):
